@@ -7,8 +7,13 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 class AuthorizationView: UIViewController {
+    
+    private var viewModel = AuthorizationViewModel()
+    private var loginObserver, passwordObserver: AnyCancellable?
+    private var login, password: String?
     
     // MARK: MainView Outlets
     
@@ -115,6 +120,13 @@ class AuthorizationView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.getUser()
+        loginObserver = viewModel.$login.sink(receiveValue: { login in
+            self.login = login
+        })
+        passwordObserver = viewModel.$password.sink(receiveValue: { password in
+            self.password = password
+        })
         setupHierarchy()
         setupLayout()
     }
@@ -199,6 +211,25 @@ class AuthorizationView: UIViewController {
     
     @objc private func buttonPressed() {
         
+        if loginTextField.text == login && passwordTextField.text == password {
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(viewController: ViewController(), animationOptions: .transitionFlipFromRight)
+        } else if loginTextField.text == "" && passwordTextField.text == "" {
+            showAlert(title: "Nothing was entered", message: "Please write your login and password!")
+        } else {
+            showAlert(title: "Wrong Login or Password!", message: "Please write a correct login or password and try again!")
+        }
     }
     
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok",
+                                        style: .destructive) { _ in
+            self.loginTextField.text = ""
+            self.passwordTextField.text = ""
+        }
+        alert.addAction(alertAction)
+        present(alert, animated: true)
+    }
 }
