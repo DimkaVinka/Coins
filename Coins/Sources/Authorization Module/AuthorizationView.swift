@@ -1,0 +1,204 @@
+//
+//  AuthorizationView.swift
+//  Coins
+//
+//  Created by Дмитрий Виноградов on 25.08.2022.
+//
+
+import UIKit
+import SnapKit
+
+class AuthorizationView: UIViewController {
+    
+    // MARK: MainView Outlets
+    
+    private lazy var mainImage: UIImageView = {
+        let image = UIImageView(image: UIImage(named: "mainImage"))
+        return image
+    }()
+    
+    private lazy var mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
+        return view
+    }()
+    
+    private lazy var mainDivider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    // MARK: - LoginView Outlets
+    
+    private lazy var loginStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fillProportionally
+        stack.alignment = .leading
+        return stack
+    }()
+    
+    private lazy var loginDivider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    private lazy var loginLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Login"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .systemGray4
+        return label
+    }()
+    
+    private lazy var loginTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Type your login here (111)"
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        return textField
+    }()
+    
+    // MARK: - PasswordView Outlets
+    
+    private lazy var passwordStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .fillProportionally
+        stack.alignment = .leading
+        return stack
+    }()
+    
+    private lazy var passwordDivider: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    private lazy var passwordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Password"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textColor = .systemGray4
+        return label
+    }()
+    
+    private lazy var passwordTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Type your password here (111)"
+        textField.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        return textField
+    }()
+    
+    // MARK: - Button Outlets
+    
+    private lazy var button: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log In", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        button.layer.cornerRadius = 20
+        button.tintColor = .black
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 10
+        button.layer.shouldRasterize = true
+        button.layer.rasterizationScale = UIScreen.main.scale
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        return button
+    }()
+    
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupHierarchy()
+        setupLayout()
+    }
+    
+    // MARK: SetupHierarchy
+    
+    private func setupHierarchy() {
+        view.addSubview(mainImage)
+        view.addSubview(mainView)
+        view.addSubview(mainDivider)
+        
+        mainView.addSubview(loginStack)
+        mainView.addSubview(passwordStack)
+        mainView.addSubview(button)
+        
+        loginStack.addArrangedSubview(loginLabel)
+        loginStack.addArrangedSubview(loginTextField)
+        loginStack.addArrangedSubview(loginDivider)
+        
+        passwordStack.addArrangedSubview(passwordLabel)
+        passwordStack.addArrangedSubview(passwordTextField)
+        passwordStack.addArrangedSubview(passwordDivider)
+    }
+    
+    // MARK: - SetupLayout
+    
+    private func setupLayout() {
+        mainImage.snp.makeConstraints { make in
+            make.left.equalTo(view)
+            make.top.equalTo(view)
+            make.right.equalTo(view)
+            make.width.equalTo(mainImage.snp.height).multipliedBy(1.500375)
+        }
+        
+        mainView.snp.makeConstraints { make in
+            make.top.equalTo(mainImage.snp.bottom)
+            make.right.bottom.left.equalTo(view)
+        }
+        
+        mainDivider.snp.makeConstraints { make in
+            make.left.right.equalTo(view)
+            make.height.equalTo(1)
+            make.top.equalTo(mainImage.snp.bottom)
+        }
+        
+        loginStack.snp.makeConstraints { make in
+            make.centerX.equalTo(mainView)
+            make.left.equalTo(mainView).offset(50)
+            make.right.equalTo(mainView).inset(50)
+            make.top.equalTo(mainView).offset(50)
+            make.height.equalTo(70)
+        }
+        
+        passwordStack.snp.makeConstraints { make in
+            make.centerX.equalTo(mainView)
+            make.left.equalTo(mainView).offset(50)
+            make.right.equalTo(mainView).inset(50)
+            make.top.equalTo(loginStack.snp.bottom).offset(30)
+            make.height.equalTo(70)
+        }
+        
+        loginDivider.snp.makeConstraints { make in
+            make.width.equalTo(loginStack.snp.width)
+            make.height.equalTo(1)
+        }
+        
+        passwordDivider.snp.makeConstraints { make in
+            make.width.equalTo(passwordStack.snp.width)
+            make.height.equalTo(1)
+        }
+        
+        button.snp.makeConstraints { make in
+            make.centerX.equalTo(mainView)
+            make.left.equalTo(mainView).offset(50)
+            make.right.equalTo(mainView).inset(50)
+            make.top.equalTo(passwordStack.snp.bottom).offset(50)
+            make.height.equalTo(40)
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func buttonPressed() {
+        
+    }
+    
+}
