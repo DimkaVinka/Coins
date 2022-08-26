@@ -14,9 +14,8 @@ class TableViewView: UIViewController {
     private let viewModel = TableViewViewModel()
     private var coinsObserver: AnyCancellable?
     private var coinsImagesIbserver: AnyCancellable?
-    private var mainCoinModel: MainCoinModel?
     private var coins: [Coin]?
-    private var coinsImages: [UIImage]?
+    private var coinsImages: [String]?
     
     // MARK: - Outlets
     
@@ -36,14 +35,13 @@ class TableViewView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.getData()
+        viewModel.sortCoins(tableView: self.tableView, sortType: .startSorting)
         title = "Coins"
         view.backgroundColor = .systemYellow
         coinsObserver = viewModel.$coins.sink(receiveValue: { coinsArray in
-            self.mainCoinModel?.coin = coinsArray
             self.coins = coinsArray
         })
         coinsImagesIbserver = viewModel.$coinsImages.sink(receiveValue: { imagesArray in
-            self.mainCoinModel?.coinImage = imagesArray
             self.coinsImages = imagesArray
         })
         setupHierarchy()
@@ -91,7 +89,8 @@ class TableViewView: UIViewController {
                 self.coins?.forEach { temporaryCoinsString += $0.name }
                 
                 if temporaryArrayString == temporaryCoinsString {
-                    self.showAlert(title: "Nothing has changed", message: "The data may not have been updated yet. It's worth the wait!")
+                    self.showAlert(title: "Nothing has changed",
+                                   message: "The data may not have been updated yet. It's worth the wait!")
                 } else {
                     self.tableView.reloadData()
                 }
@@ -104,8 +103,7 @@ class TableViewView: UIViewController {
         
         let leftBarButtonMenu = UIMenu(title: "", children: [
             UIAction(title: NSLocalizedString("Reset and Update Table", comment: ""), image: UIImage(systemName: "arrow.up.circle"), handler: { _ in
-                self.viewModel.coins = self.viewModel.checkCoinsData
-                self.tableView.reloadData()
+                self.viewModel.sortCoins(tableView: self.tableView, sortType: .startSorting)
             }),
             UIAction(title: NSLocalizedString("Log Out", comment: ""), image: UIImage(systemName: "arrow.down.circle"), handler: { _ in
                 UserDefaults.standard.set(false, forKey: "isLogged")
@@ -136,9 +134,10 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell", for: indexPath) as! TableViewCustomCell
+        
         cell.mainTitle.text = coins?[indexPath.row].name
         cell.detailTitle.text = coins?[indexPath.row].symbol
-        cell.image.image = coinsImages?[indexPath.row]
+        cell.image.image = UIImage(named: (coinsImages?[indexPath.row])!)
         let costs = String(format: "%.3f", coins?[indexPath.row].marketData.priceUsd ?? 0) + "$"
         cell.costTitle.text = costs
         cell.accessoryType = .disclosureIndicator

@@ -10,9 +10,8 @@ import SnapKit
 
 class DetailView: UIViewController {
     
-    private let viewModel = DetailViewModel()
     var coin: Coin?
-    var coinImage: UIImage?
+    var coinImage: String?
     
     // MARK: - MainView Outlets
     
@@ -163,23 +162,19 @@ class DetailView: UIViewController {
     // MARK: - Setup
     
     private func setupHierarchy() {
-        view.addSubview(backgroundImage)
-        view.addSubview(mainTitle)
         
-        view.addSubview(usdLabel)
-        view.addSubview(usdStack)
+        view.addSubviews([
+            backgroundImage, mainTitle, usdLabel, usdStack, btcLabel, btcStack, ethLabel, ethStack
+        ])
+        
         usdStack.addArrangedSubviews([
         usdPriceLabel, usdPercentChangeIn1Hour, usdPercentChangeIn24Hours
         ])
         
-        view.addSubview(btcLabel)
-        view.addSubview(btcStack)
         btcStack.addArrangedSubviews([
         btcPriceLabel, btcPercentChangeIn1Hour, btcPercentChangeIn24Hours
         ])
         
-        view.addSubview(ethLabel)
-        view.addSubview(ethStack)
         ethStack.addArrangedSubviews([
             ethPriceLabel, ethPercentChangeIn1Hour, ethPercentChangeIn24Hours
         ])
@@ -257,7 +252,7 @@ class DetailView: UIViewController {
     
     private func configureData() {
         mainTitle.text = coin?.name
-        backgroundImage.image = coinImage
+        backgroundImage.image = UIImage(named: coinImage!)
         
         usdPriceLabel.text = "Price of this coin -> " + String(format: "%.2f", coin?.marketData.priceUsd ?? 0) + "$"
         usdPercentChangeIn1Hour.text = "Changes since 1 Hour in % -> " + String(format: "%.7f", coin?.marketData.percentChangeUsdLast1_Hour ?? 0) + "%"
