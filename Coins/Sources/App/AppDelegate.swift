@@ -12,6 +12,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserDefaults.standard.register(defaults: ["user": ["111": "111"]])
+        
+        let coins = ["btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"]
+        let group = DispatchGroup()
+        for coin in coins {
+            group.enter()
+                NetworkManager.shared.getData(coin: coin) {
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            print("Done!")
+        }
+        
         return true
     }
 

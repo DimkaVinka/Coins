@@ -134,21 +134,21 @@ class AuthorizationView: UIViewController {
     // MARK: SetupHierarchy
     
     private func setupHierarchy() {
-        view.addSubview(mainImage)
-        view.addSubview(mainView)
-        view.addSubview(mainDivider)
+        view.addSubviews([
+            mainImage, mainView, mainDivider
+        ])
         
-        mainView.addSubview(loginStack)
-        mainView.addSubview(passwordStack)
-        mainView.addSubview(button)
+        mainView.addSubviews([
+        loginStack, passwordStack, button
+        ])
         
-        loginStack.addArrangedSubview(loginLabel)
-        loginStack.addArrangedSubview(loginTextField)
-        loginStack.addArrangedSubview(loginDivider)
+        loginStack.addArrangedSubviews([
+        loginLabel, loginTextField, loginDivider
+        ])
         
-        passwordStack.addArrangedSubview(passwordLabel)
-        passwordStack.addArrangedSubview(passwordTextField)
-        passwordStack.addArrangedSubview(passwordDivider)
+        passwordStack.addArrangedSubviews([
+        passwordLabel, passwordTextField, passwordDivider
+        ])
     }
     
     // MARK: - SetupLayout
@@ -212,7 +212,9 @@ class AuthorizationView: UIViewController {
     @objc private func buttonPressed() {
         
         if loginTextField.text == login && passwordTextField.text == password {
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(viewController: ViewController(), animationOptions: .transitionFlipFromRight)
+            let viewController = TableViewView()
+            let navigationController = UINavigationController(rootViewController: viewController)
+            SceneDelegate.shared.changeRootViewController(viewController: navigationController, animationOptions: .transitionFlipFromRight)
         } else if loginTextField.text == "" && passwordTextField.text == "" {
             showAlert(title: "Nothing was entered", message: "Please write your login and password!")
         } else {
