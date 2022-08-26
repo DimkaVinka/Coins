@@ -13,9 +13,7 @@ class TableViewView: UIViewController {
     
     private let viewModel = TableViewViewModel()
     private var coinsObserver: AnyCancellable?
-    private var coinsImagesIbserver: AnyCancellable?
     private var coins: [Coin]?
-    private var coinsImages: [String]?
     
     // MARK: - Outlets
     
@@ -38,12 +36,11 @@ class TableViewView: UIViewController {
         viewModel.sortCoins(tableView: self.tableView, sortType: .startSorting)
         title = "Coins"
         view.backgroundColor = .systemYellow
+        
         coinsObserver = viewModel.$coins.sink(receiveValue: { coinsArray in
             self.coins = coinsArray
         })
-        coinsImagesIbserver = viewModel.$coinsImages.sink(receiveValue: { imagesArray in
-            self.coinsImages = imagesArray
-        })
+        
         setupHierarchy()
         setupLayout()
         setupNavigationBar()
@@ -137,7 +134,7 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
         
         cell.mainTitle.text = coins?[indexPath.row].name
         cell.detailTitle.text = coins?[indexPath.row].symbol
-        cell.image.image = UIImage(named: (coinsImages?[indexPath.row])!)
+        cell.image.image = UIImage(named: (coins?[indexPath.row])?.symbol ?? "")
         let costs = String(format: "%.3f", coins?[indexPath.row].marketData.priceUsd ?? 0) + "$"
         cell.costTitle.text = costs
         cell.accessoryType = .disclosureIndicator
@@ -152,7 +149,6 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let viewController = DetailView()
         viewController.coin = coins?[indexPath.row]
-        viewController.coinImage = coinsImages?[indexPath.row]
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

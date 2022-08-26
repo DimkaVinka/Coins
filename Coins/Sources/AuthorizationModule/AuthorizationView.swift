@@ -18,13 +18,15 @@ class AuthorizationView: UIViewController {
     // MARK: MainView Outlets
     
     private lazy var mainImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "mainImage"))
-        return image
+        let image = UIImage(named: "launchImage")?.blur(10)
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFill
+        imageView.alpha = 0.2
+        return imageView
     }()
     
     private lazy var mainView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGray6
         return view
     }()
     
@@ -54,7 +56,7 @@ class AuthorizationView: UIViewController {
         let label = UILabel()
         label.text = "Login"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .systemGray4
+        label.textColor = .black
         return label
     }()
     
@@ -85,7 +87,7 @@ class AuthorizationView: UIViewController {
         let label = UILabel()
         label.text = "Password"
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textColor = .systemGray4
+        label.textColor = .black
         return label
     }()
     
@@ -120,6 +122,7 @@ class AuthorizationView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemYellow
         viewModel.getUser()
         loginObserver = viewModel.$login.sink(receiveValue: { login in
             self.login = login
@@ -154,15 +157,15 @@ class AuthorizationView: UIViewController {
     // MARK: - SetupLayout
     
     private func setupLayout() {
+        
         mainImage.snp.makeConstraints { make in
-            make.left.equalTo(view)
-            make.top.equalTo(view)
-            make.right.equalTo(view)
-            make.width.equalTo(mainImage.snp.height).multipliedBy(1.500375)
+            make.left.top.right.bottom.equalTo(view)
+            make.center.equalTo(view)
         }
         
         mainView.snp.makeConstraints { make in
-            make.top.equalTo(mainImage.snp.bottom)
+            make.center.equalTo(view)
+            make.top.equalTo(view)
             make.right.bottom.left.equalTo(view)
         }
         
@@ -176,7 +179,7 @@ class AuthorizationView: UIViewController {
             make.centerX.equalTo(mainView)
             make.left.equalTo(mainView).offset(50)
             make.right.equalTo(mainView).inset(50)
-            make.top.equalTo(mainView).offset(50)
+            make.centerY.equalTo(view)
             make.height.equalTo(70)
         }
         

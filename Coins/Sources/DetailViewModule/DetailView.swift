@@ -11,7 +11,6 @@ import SnapKit
 class DetailView: UIViewController {
     
     var coin: Coin?
-    var coinImage: String?
     
     // MARK: - MainView Outlets
     
@@ -252,7 +251,7 @@ class DetailView: UIViewController {
     
     private func configureData() {
         mainTitle.text = coin?.name
-        backgroundImage.image = UIImage(named: coinImage!)
+        backgroundImage.image = UIImage(named: coin?.symbol ?? "")
         
         usdPriceLabel.text = "Price of this coin -> " + String(format: "%.2f", coin?.marketData.priceUsd ?? 0) + "$"
         usdPercentChangeIn1Hour.text = "Changes since 1 Hour in % -> " + String(format: "%.7f", coin?.marketData.percentChangeUsdLast1_Hour ?? 0) + "%"
