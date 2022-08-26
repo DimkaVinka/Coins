@@ -48,9 +48,3 @@ struct MarketData: Decodable {
         case percentChangeEthLast24_Hours = "percent_change_eth_last_24_hours"
     }
 }
-
-extension Coin {
-    static let imageNames: [String] = [
-    "btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"
-    ]
-}
