@@ -12,14 +12,23 @@ class NetworkManager {
     
     var coins: [Coin] = []
     
+    // API-Key -> 07101c86-c534-4d4d-a817-deb5ad7fbd56
+    
     private func getURL(coin: String) -> String {
-        return "https://data.messari.io/api/v1/assets/" + coin + "/metrics"
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "data.messari.io"
+        components.path = "/api/v1/assets/" + coin + "/metrics"
+        return components.url?.absoluteString ?? "ERROR"
     }
 
     func getData(coin: String, completion: @escaping () -> Void) {
         let url = getURL(coin: coin)
         guard let url = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("x-messari-api-key", forHTTPHeaderField: "07101c86-c534-4d4d-a817-deb5ad7fbd56")
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 print("ERROR")
             } else if let response = response as? HTTPURLResponse, response.statusCode == 200 {

@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.register(defaults: ["isLogged": false])
         
         let coins = ["btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"]
+//        let coins = ["btc"]
         let group = DispatchGroup()
         for coin in coins {
             group.enter()

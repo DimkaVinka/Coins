@@ -14,6 +14,7 @@ class TableViewView: UIViewController {
     private let viewModel = TableViewViewModel()
     private var coinsObserver: AnyCancellable?
     private var coinsImagesIbserver: AnyCancellable?
+    private var mainCoinModel: MainCoinModel?
     private var coins: [Coin]?
     private var coinsImages: [UIImage]?
     
@@ -38,9 +39,11 @@ class TableViewView: UIViewController {
         title = "Coins"
         view.backgroundColor = .systemYellow
         coinsObserver = viewModel.$coins.sink(receiveValue: { coinsArray in
+            self.mainCoinModel?.coin = coinsArray
             self.coins = coinsArray
         })
         coinsImagesIbserver = viewModel.$coinsImages.sink(receiveValue: { imagesArray in
+            self.mainCoinModel?.coinImage = imagesArray
             self.coinsImages = imagesArray
         })
         setupHierarchy()
@@ -148,7 +151,9 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let viewController = ModuleBuilder.moduleDetailView()
+        let viewController = DetailView()
+        viewController.coin = coins?[indexPath.row]
+        viewController.coinImage = coinsImages?[indexPath.row]
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
