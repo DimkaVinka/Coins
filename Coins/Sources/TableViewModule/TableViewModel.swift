@@ -6,18 +6,20 @@
 //
 
 import Foundation
-import UIKit
-
-struct MainCoinModel {
-    var coin: [Coin]
-    var coinImage: [UIImage]
-}
 
 struct CoinModel: Decodable {
     var data: Coin
 }
 
-struct Coin: Decodable {
+struct Coin: Decodable, Comparable {
+    static func < (lhs: Coin, rhs: Coin) -> Bool {
+        true
+    }
+    
+    static func == (lhs: Coin, rhs: Coin) -> Bool {
+        true
+    }
+    
     var symbol, name: String
     var marketData: MarketData
     
@@ -47,19 +49,8 @@ struct MarketData: Decodable {
     }
 }
 
-// MARK: - Force Unwrapped оправдан тем, что изображения находятся в Assets и подразумевается, что оттуда они никуда не денутся!
-// Список используемых монет - "btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"
 extension Coin {
-    static let images: [UIImage] = [
-        UIImage(named: "btc")!,
-        UIImage(named: "eth")!,
-        UIImage(named: "tron")!,
-        UIImage(named: "luna")!,
-        UIImage(named: "polkadot")!,
-        UIImage(named: "dogecoin")!,
-        UIImage(named: "tether")!,
-        UIImage(named: "stellar")!,
-        UIImage(named: "cardano")!,
-        UIImage(named: "xrp")!
+    static let imageNames: [String] = [
+    "btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"
     ]
 }

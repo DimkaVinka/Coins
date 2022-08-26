@@ -215,11 +215,16 @@ class AuthorizationView: UIViewController {
             UserDefaults.standard.set(true, forKey: "isLogged")
             let viewController = ModuleBuilder.moduleTableView()
             let navigationController = UINavigationController(rootViewController: viewController)
-            SceneDelegate.shared.changeRootViewController(viewController: navigationController, animationOptions: .transitionFlipFromRight)
+            SceneDelegate
+                .shared
+                .changeRootViewController(viewController: navigationController,
+                                          animationOptions: .transitionFlipFromRight)
         } else if loginTextField.text == "" && passwordTextField.text == "" {
-            showAlert(title: "Nothing was entered", message: "Please write your login and password!")
+            showAlert(title: "Nothing was entered",
+                      message: "Please write your login and password!")
         } else {
-            showAlert(title: "Wrong Login or Password!", message: "Please write a correct login or password and try again!")
+            showAlert(title: "Wrong Login or Password!",
+                      message: "Please write a correct login or password and try again!")
         }
     }
     
