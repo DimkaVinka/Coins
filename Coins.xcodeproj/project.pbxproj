@@ -16,6 +16,12 @@
 		7D14312C28B8017E00314A29 /* AuthorizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14312B28B8017E00314A29 /* AuthorizationModel.swift */; };
 		7D14312F28B801BC00314A29 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7D14312E28B801BC00314A29 /* SnapKit */; };
 		7D14313228B804A200314A29 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313128B804A200314A29 /* UIView+Extensions.swift */; };
+		7D14313528B82F6E00314A29 /* TableViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313428B82F6E00314A29 /* TableViewView.swift */; };
+		7D14313728B82F7A00314A29 /* TableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313628B82F7A00314A29 /* TableViewViewModel.swift */; };
+		7D14313928B82F8300314A29 /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313828B82F8300314A29 /* TableViewModel.swift */; };
+		7D14313B28B8305200314A29 /* TableViewCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313A28B8305200314A29 /* TableViewCustomCell.swift */; };
+		7D14313D28B8322800314A29 /* SceneDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313C28B8322800314A29 /* SceneDelegate+Extension.swift */; };
+		7D14314028B8446000314A29 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313F28B8446000314A29 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +35,12 @@
 		7D14312928B8017100314A29 /* AuthorizationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewModel.swift; sourceTree = "<group>"; };
 		7D14312B28B8017E00314A29 /* AuthorizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationModel.swift; sourceTree = "<group>"; };
 		7D14313128B804A200314A29 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		7D14313428B82F6E00314A29 /* TableViewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewView.swift; sourceTree = "<group>"; };
+		7D14313628B82F7A00314A29 /* TableViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewViewModel.swift; sourceTree = "<group>"; };
+		7D14313828B82F8300314A29 /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		7D14313A28B8305200314A29 /* TableViewCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCustomCell.swift; sourceTree = "<group>"; };
+		7D14313C28B8322800314A29 /* SceneDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneDelegate+Extension.swift"; sourceTree = "<group>"; };
+		7D14313F28B8446000314A29 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +83,10 @@
 		7D14312228B7FD4400314A29 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7D14313E28B8445400314A29 /* Managers */,
+				7D14313328B82F4F00314A29 /* TableViewModule */,
 				7D14313028B8049000314A29 /* Extensions */,
-				7D14312628B8013A00314A29 /* Authorization Module */,
+				7D14312628B8013A00314A29 /* AuthorizationModule */,
 				7D14311228B7FC0900314A29 /* ViewController.swift */,
 				7D14312528B7FE7C00314A29 /* App */,
 			);
@@ -105,22 +119,42 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		7D14312628B8013A00314A29 /* Authorization Module */ = {
+		7D14312628B8013A00314A29 /* AuthorizationModule */ = {
 			isa = PBXGroup;
 			children = (
 				7D14312728B8016100314A29 /* AuthorizationView.swift */,
 				7D14312928B8017100314A29 /* AuthorizationViewModel.swift */,
 				7D14312B28B8017E00314A29 /* AuthorizationModel.swift */,
 			);
-			path = "Authorization Module";
+			path = AuthorizationModule;
 			sourceTree = "<group>";
 		};
 		7D14313028B8049000314A29 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				7D14313128B804A200314A29 /* UIView+Extensions.swift */,
+				7D14313C28B8322800314A29 /* SceneDelegate+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7D14313328B82F4F00314A29 /* TableViewModule */ = {
+			isa = PBXGroup;
+			children = (
+				7D14313428B82F6E00314A29 /* TableViewView.swift */,
+				7D14313628B82F7A00314A29 /* TableViewViewModel.swift */,
+				7D14313828B82F8300314A29 /* TableViewModel.swift */,
+				7D14313A28B8305200314A29 /* TableViewCustomCell.swift */,
+			);
+			path = TableViewModule;
+			sourceTree = "<group>";
+		};
+		7D14313E28B8445400314A29 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7D14313F28B8446000314A29 /* NetworkManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,11 +233,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D14313228B804A200314A29 /* UIView+Extensions.swift in Sources */,
+				7D14313D28B8322800314A29 /* SceneDelegate+Extension.swift in Sources */,
+				7D14313928B82F8300314A29 /* TableViewModel.swift in Sources */,
+				7D14314028B8446000314A29 /* NetworkManager.swift in Sources */,
 				7D14311328B7FC0900314A29 /* ViewController.swift in Sources */,
+				7D14313B28B8305200314A29 /* TableViewCustomCell.swift in Sources */,
 				7D14310F28B7FC0900314A29 /* AppDelegate.swift in Sources */,
 				7D14312828B8016100314A29 /* AuthorizationView.swift in Sources */,
+				7D14313528B82F6E00314A29 /* TableViewView.swift in Sources */,
 				7D14311128B7FC0900314A29 /* SceneDelegate.swift in Sources */,
 				7D14312A28B8017100314A29 /* AuthorizationViewModel.swift in Sources */,
+				7D14313728B82F7A00314A29 /* TableViewViewModel.swift in Sources */,
 				7D14312C28B8017E00314A29 /* AuthorizationModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
