@@ -14,12 +14,13 @@ class AuthorizationViewModel {
     
     @Published private(set) var login: String = ""
     @Published private(set) var password: String = ""
+    @Published private(set) var isLogged: Bool = false
     
     // MARK: - Methods
     
     func getUser() {
-        let userData = UserDefaults.standard.object(forKey: "user") as? [String: String] ?? ["": ""]
-        login = userData.keys.first ?? ""
-        password = userData.values.first ?? ""
+        login = UserDefaults.standard.string(forKey: "login") ?? ""
+        password = UserDefaults.standard.string(forKey: "password") ?? ""
+        isLogged = UserDefaults.standard.bool(forKey: "isLogged")
     }
 }

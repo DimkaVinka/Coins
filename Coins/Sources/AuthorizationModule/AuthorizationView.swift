@@ -212,7 +212,8 @@ class AuthorizationView: UIViewController {
     @objc private func buttonPressed() {
         
         if loginTextField.text == login && passwordTextField.text == password {
-            let viewController = TableViewView()
+            UserDefaults.standard.set(true, forKey: "isLogged")
+            let viewController = ModuleBuilder.moduleTableView()
             let navigationController = UINavigationController(rootViewController: viewController)
             SceneDelegate.shared.changeRootViewController(viewController: navigationController, animationOptions: .transitionFlipFromRight)
         } else if loginTextField.text == "" && passwordTextField.text == "" {

@@ -14,6 +14,7 @@ class TableViewView: UIViewController {
     private let viewModel = TableViewViewModel()
     private var coinsObserver: AnyCancellable?
     private var coinsImagesIbserver: AnyCancellable?
+    private var mainCoinModel: MainCoinModel?
     private var coins: [Coin]?
     private var coinsImages: [UIImage]?
     
@@ -25,6 +26,8 @@ class TableViewView: UIViewController {
         tableView.delegate = self
         tableView.register(TableViewCustomCell.self, forCellReuseIdentifier: "customCell")
         tableView.backgroundColor = .clear
+        tableView.layer.borderWidth = 1
+        tableView.layer.borderColor = UIColor.black.cgColor
         return tableView
     }()
     
@@ -36,13 +39,16 @@ class TableViewView: UIViewController {
         title = "Coins"
         view.backgroundColor = .systemYellow
         coinsObserver = viewModel.$coins.sink(receiveValue: { coinsArray in
+            self.mainCoinModel?.coin = coinsArray
             self.coins = coinsArray
         })
         coinsImagesIbserver = viewModel.$coinsImages.sink(receiveValue: { imagesArray in
+            self.mainCoinModel?.coinImage = imagesArray
             self.coinsImages = imagesArray
         })
         setupHierarchy()
         setupLayout()
+        setupNavigationBar()
     }
     
     // MARK: - Setup
@@ -57,6 +63,70 @@ class TableViewView: UIViewController {
             make.top.right.bottom.height.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.barStyle = .default
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont.boldSystemFont(ofSize: 20)]
+
+        let backButton = UIImage(systemName: "arrow.uturn.backward.square")
+        navigationController?.navigationBar.backIndicatorImage = backButton
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backButton
+        navigationController?.navigationBar.backItem?.title = ""
+        let backBarButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backBarButton
+
+        let rightBarButtonMenu = UIMenu(title: "", children: [
+            UIAction(title: NSLocalizedString("Sort by USD price Ascending", comment: ""), image: UIImage(systemName: "arrow.up.circle"), handler: { _ in
+                self.viewModel.sortCoins(tableView: self.tableView, sortType: .ascendingByUSDPrice)
+            }),
+            UIAction(title: NSLocalizedString("Sort by USD Price Drop last 1 Hour", comment: ""), image: UIImage(systemName: "arrow.up.square"), handler: { _ in
+                let temporaryArray = self.coins
+                self.viewModel.sortCoins(tableView: self.tableView, sortType: .dropUSDPerTast1Hour)
+                
+                var temporaryArrayString = ""
+                temporaryArray?.forEach { temporaryArrayString += $0.name }
+                var temporaryCoinsString = ""
+                self.coins?.forEach { temporaryCoinsString += $0.name }
+                
+                if temporaryArrayString == temporaryCoinsString {
+                    self.showAlert(title: "Nothing has changed", message: "The data may not have been updated yet. It's worth the wait!")
+                } else {
+                    self.tableView.reloadData()
+                }
+            }),
+            UIAction(title: NSLocalizedString("Sort by USD Price Drop last 24 Hours", comment: ""), image: UIImage(systemName: "arrow.down.square"), handler: { _ in
+                self.viewModel.sortCoins(tableView: self.tableView, sortType: .dropUSDPerLast24Hours)
+            })
+        ])
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "arrow.up.arrow.down.circle"), primaryAction: nil, menu: rightBarButtonMenu)
+        
+        let leftBarButtonMenu = UIMenu(title: "", children: [
+            UIAction(title: NSLocalizedString("Reset and Update Table", comment: ""), image: UIImage(systemName: "arrow.up.circle"), handler: { _ in
+                self.viewModel.coins = self.viewModel.checkCoinsData
+                self.tableView.reloadData()
+            }),
+            UIAction(title: NSLocalizedString("Log Out", comment: ""), image: UIImage(systemName: "arrow.down.circle"), handler: { _ in
+                UserDefaults.standard.set(false, forKey: "isLogged")
+                SceneDelegate
+                    .shared
+                    .changeRootViewController(viewController: ModuleBuilder.moduleAuthorization(),
+                                              animationOptions: .transitionFlipFromLeft)
+            }),
+        ])
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", image: UIImage(systemName: "rectangle.and.hand.point.up.left.filled"), primaryAction: nil, menu: leftBarButtonMenu)
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok",
+                                        style: .destructive)
+        alert.addAction(alertAction)
+        present(alert, animated: true)
+    }
 }
 
 extension TableViewView: UITableViewDataSource, UITableViewDelegate {
@@ -69,7 +139,7 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
         cell.mainTitle.text = coins?[indexPath.row].name
         cell.detailTitle.text = coins?[indexPath.row].symbol
         cell.image.image = coinsImages?[indexPath.row]
-        let costs = String(format: "%.1f", coins?[indexPath.row].marketData.priceUsd ?? 0)
+        let costs = String(format: "%.3f", coins?[indexPath.row].marketData.priceUsd ?? 0) + "$"
         cell.costTitle.text = costs
         cell.accessoryType = .disclosureIndicator
         return cell
@@ -79,5 +149,11 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
         70
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let viewController = DetailView()
+        viewController.coin = coins?[indexPath.row]
+        viewController.coinImage = coinsImages?[indexPath.row]
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
