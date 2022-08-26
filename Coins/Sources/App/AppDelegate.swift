@@ -11,20 +11,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UserDefaults.standard.register(defaults: ["user": ["111": "111"]])
-        
-        let coins = ["btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"]
-        let group = DispatchGroup()
-        for coin in coins {
-            group.enter()
-                NetworkManager.shared.getData(coin: coin) {
-                group.leave()
-            }
-        }
-        group.notify(queue: .main) {
-            print("Done!")
-        }
-        
+        saveUser()
         return true
     }
 
@@ -37,6 +24,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         
+    }
+    
+    private func saveUser() {
+        UserDefaults.standard.register(defaults: ["login": "111"])
+        UserDefaults.standard.register(defaults: ["password": "111"])
+        UserDefaults.standard.register(defaults: ["isLogged": false])
+        
+        let coins = ["btc", "eth", "tron", "luna", "polkadot", "dogecoin", "tether", "stellar", "cardano", "xrp"]
+        let group = DispatchGroup()
+        for coin in coins {
+            group.enter()
+                NetworkManager.shared.getData(coin: coin) {
+                group.leave()
+            }
+        }
+        group.notify(queue: .main) {
+            print("Done!")
+        }
     }
 
 }

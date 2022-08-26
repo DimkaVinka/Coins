@@ -24,9 +24,13 @@ struct Coin: Decodable {
 
 struct MarketData: Decodable {
     var priceUsd: Double?
+    var percentChangeUsdLast1_Hour: Double?
+    var percentChangeUsdLast24_Hours: Double?
     
     enum CodingKeys: String, CodingKey {
         case priceUsd = "price_usd"
+        case percentChangeUsdLast1_Hour = "percent_change_usd_last_1_hour"
+        case percentChangeUsdLast24_Hours = "percent_change_usd_last_24_hours"
     }
 }
 

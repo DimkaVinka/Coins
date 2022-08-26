@@ -82,7 +82,7 @@ class TableViewCustomCell: UITableViewCell {
         
         costTitle.snp.makeConstraints { make in
             make.centerY.equalTo(image)
-            make.right.equalTo(contentView.safeAreaLayoutGuide).inset(30)
+            make.right.equalTo(contentView.safeAreaLayoutGuide).inset(15)
         }
     }
     
