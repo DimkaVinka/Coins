@@ -23,6 +23,8 @@
 		7D14314028B8446000314A29 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14313F28B8446000314A29 /* NetworkManager.swift */; };
 		7D14314228B85D8600314A29 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14314128B85D8600314A29 /* ModuleBuilder.swift */; };
 		7D14314528B85F0E00314A29 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D14314428B85F0E00314A29 /* DetailView.swift */; };
+		7D1A78D228EDC32F0025EC0F /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1A78D128EDC32F0025EC0F /* Animation.swift */; };
+		7D1A78D428EDC4E90025EC0F /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1A78D328EDC4E90025EC0F /* UITableView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		7D14313F28B8446000314A29 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		7D14314128B85D8600314A29 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		7D14314428B85F0E00314A29 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		7D1A78D128EDC32F0025EC0F /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		7D1A78D328EDC4E90025EC0F /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 		7D14312228B7FD4400314A29 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7D1A78D028EDC31C0025EC0F /* AnimationClass */,
 				7D14314328B85EE700314A29 /* DetailViewModule */,
 				7D14313E28B8445400314A29 /* Managers */,
 				7D14313328B82F4F00314A29 /* TableViewModule */,
@@ -137,6 +142,7 @@
 			children = (
 				7D14313128B804A200314A29 /* UIView+Extensions.swift */,
 				7D14313C28B8322800314A29 /* SceneDelegate+Extension.swift */,
+				7D1A78D328EDC4E90025EC0F /* UITableView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -166,6 +172,14 @@
 				7D14314428B85F0E00314A29 /* DetailView.swift */,
 			);
 			path = DetailViewModule;
+			sourceTree = "<group>";
+		};
+		7D1A78D028EDC31C0025EC0F /* AnimationClass */ = {
+			isa = PBXGroup;
+			children = (
+				7D1A78D128EDC32F0025EC0F /* Animation.swift */,
+			);
+			path = AnimationClass;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +260,7 @@
 				7D14313228B804A200314A29 /* UIView+Extensions.swift in Sources */,
 				7D14313D28B8322800314A29 /* SceneDelegate+Extension.swift in Sources */,
 				7D14313928B82F8300314A29 /* TableViewModel.swift in Sources */,
+				7D1A78D428EDC4E90025EC0F /* UITableView+Extensions.swift in Sources */,
 				7D14314028B8446000314A29 /* NetworkManager.swift in Sources */,
 				7D14311328B7FC0900314A29 /* LaunchScreenViewController.swift in Sources */,
 				7D14313B28B8305200314A29 /* TableViewCustomCell.swift in Sources */,
@@ -256,6 +271,7 @@
 				7D14312A28B8017100314A29 /* AuthorizationViewModel.swift in Sources */,
 				7D14314228B85D8600314A29 /* ModuleBuilder.swift in Sources */,
 				7D14313728B82F7A00314A29 /* TableViewViewModel.swift in Sources */,
+				7D1A78D228EDC32F0025EC0F /* Animation.swift in Sources */,
 				7D14314528B85F0E00314A29 /* DetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

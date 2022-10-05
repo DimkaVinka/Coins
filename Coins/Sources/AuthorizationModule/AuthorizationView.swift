@@ -64,6 +64,7 @@ class AuthorizationView: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Type your login here (111)"
         textField.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        textField.addTarget(self, action: #selector(buttonPressed), for: UIControl.Event.primaryActionTriggered)
         return textField
     }()
     
@@ -95,6 +96,7 @@ class AuthorizationView: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Type your password here (111)"
         textField.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        textField.addTarget(self, action: #selector(buttonPressed), for: UIControl.Event.primaryActionTriggered)
         return textField
     }()
     
@@ -132,6 +134,7 @@ class AuthorizationView: UIViewController {
         })
         setupHierarchy()
         setupLayout()
+        setupKeyboard()
     }
     
     // MARK: SetupHierarchy
@@ -242,5 +245,30 @@ class AuthorizationView: UIViewController {
         }
         alert.addAction(alertAction)
         present(alert, animated: true)
+    }
+    
+    private func setupKeyboard() {
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func hideKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    @objc private func keyboardWillShow() {
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= 80
+        }
+    }
+    
+    @objc private func keyboardWillHide() {
+        self.view.frame.origin.y = 0
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }

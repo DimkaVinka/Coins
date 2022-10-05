@@ -41,6 +41,8 @@ class LaunchScreenViewController: UIViewController {
         setupHierarchy()
         setupLayout()
         
+        // Задержка Запуска
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             if UserDefaults.standard.bool(forKey: "isLogged") == true {
                 let viewController = ModuleBuilder.moduleTableView()
