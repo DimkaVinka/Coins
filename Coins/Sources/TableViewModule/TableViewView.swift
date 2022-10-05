@@ -151,4 +151,13 @@ extension TableViewView: UITableViewDataSource, UITableViewDelegate {
         viewController.coin = coins?[indexPath.row]
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let animation = AnimationFactory.makeFadeAnimation(duration: 0.5, delayFactor: 0.05)
+//        let animation = AnimationFactory.makeMoveUpWithBounce(rowHeight: cell.frame.height, duration: 1.0, delayFactor: 0.05)
+//        let animation = AnimationFactory.makeMoveUpWithFade(rowHeight: cell.frame.height, duration: 1.0, delayFactor: 0.05)
+        let animation = AnimationFactory.makeSlideIn(duration: 0.5, delayFactor: 0.05)
+        let animator = Animator(animation: animation)
+        animator.animate(cell: cell, at: indexPath, in: tableView)
+    }
 }
